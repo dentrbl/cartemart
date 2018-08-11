@@ -25,7 +25,7 @@
 		$un=$_POST['uname']; $pw=$_POST['pword'];
 		$search=mysqli_query($link,"SELECT *
 		FROM users
-		WHERE BINARY uname='admin' AND BINARY pword='admin'");
+		WHERE BINARY uname='$un' AND BINARY pword='$pw'");
 		$usernum=mysqli_num_rows($search);
 		if($usernum==1){
 			$uinfo=mysqli_fetch_row($search);
