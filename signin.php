@@ -42,6 +42,8 @@
 				echo ("<script> window.location.href=('CustomerHome.php'); </script>");
 			}
 		}
+		else
+			echo ("<script> alert('Invalid Username or Password! Please try again.'); </script>");
 	}
 	
 ?>
