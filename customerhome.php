@@ -4,9 +4,9 @@
 	require ('authentication.php');
 	$uname=$_SESSION["uname"];
 	include('navbar.php');
-	$prod_query=mysqli_query($link, "SELECT prodname, proddesc, netweight, prodprice, stock
+	$prod_query=mysqli_query($link, "SELECT prodname, proddesc, netweight, prodprice, stock, image
 	FROM products");
-	$avail=" ";
+	$avail=" "; $_SESSION["budget"]=0; $_SESSION["item_total"] = 0;
 	$prodno=mysqli_num_rows($prod_query);
 	if($prodno > 0){
 		echo("
@@ -18,6 +18,7 @@
 						<th>Net Weight</th>
 						<th>Price</th>
 						<th>Availability</th>
+						<th>Image</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,6 +35,7 @@
 						<td>$prec[2]</td>
 						<td>$prec[3]</td>
 						<td>$avail</td>
+						<td><img src='$prec[5]' style='height:150px; width:150px;'></td>
 					</tr>
 			");
 		}
