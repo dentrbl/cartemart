@@ -8,6 +8,7 @@
 	if($_SESSION["alvl"] == 1){
 		echo("
 			<nav>
+				<a href='Managerhome.php'>Home</a>
 				<a href='Profile.php'>Profile</a>
 				<a href='AllProducts.php'>Products</a>
 				<a href='Promos.php'>Promos</a>
@@ -19,6 +20,7 @@
 	else if($_SESSION["alvl"] == 2){
 		echo("
 			<nav>
+				<a href='Customerhome.php'>Home</a>
 				<a href='Profile.php'>Profile</a>
 				<a href='createslist.php'>Shopping List</a>
 				<a href='AllProducts.php'>Products</a>
