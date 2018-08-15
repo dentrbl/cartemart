@@ -6,7 +6,7 @@
 	include('navbar.php');
 	$prod_query=mysqli_query($link, "SELECT prodname, proddesc, netweight, prodprice, stock, image
 	FROM products");
-	$avail=" "; $_SESSION["budget"]=0; $_SESSION["item_total"] = 0;
+	$avail=" ";
 	$prodno=mysqli_num_rows($prod_query);
 	if($prodno > 0){
 		echo("
