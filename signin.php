@@ -74,6 +74,7 @@
 	</body>
 </html>
 <?php
+	require ('inventorylink.php');
 	if (isset($_POST['signin'])){
 		$un=$_POST['uname']; $pw=$_POST['pword'];
 		$search=mysqli_query($link,"SELECT *
