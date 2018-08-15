@@ -22,7 +22,7 @@
 			<nav>
 				<a href='Customerhome.php'>Home</a>
 				<a href='Profile.php'>Profile</a>
-				<a href='createslist.php'>Shopping List</a>
+				<a href='viewslists.php'>Shopping List</a>
 				<a href='AllProducts.php'>Products</a>
 				<a href='Promos.php'>Promos</a>
 				<a href='Settings.php'>Settings</a>
