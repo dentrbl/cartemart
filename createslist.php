@@ -67,6 +67,11 @@
 				unset($_SESSION["slist"]);
 				$_SESSION["budget"]=0;
 			break;
+			
+			case "filter":
+				$_SESSION["cid"]=$_POST["category"];
+				$_SESSION["scid"]=$_POST["subcat"];
+			break;
 		}
 	}
 ?>
@@ -125,17 +130,46 @@
 		<br /><br />
 		<?php
 			if($_SESSION["budget"]>0){
+			$catquery=mysqli_query($link,"SELECT * FROM categories");
+			$subcatquery=mysqli_query($link,"SELECT subcatid, subcatname FROM subcategories");
 		?>
+		<form method="post" action="createslist.php?action=filter">
+			<select name='category' title="category">
+				<option selected disabled>- Select Category -</option>
+				<?php 
+					while($cat=mysqli_fetch_row($catquery)){
+						echo("<option value='$cat[0]'>$cat[1]</option>");
+					}
+				?>
+			</select>
+			<select name='subcat' title="subcategory">
+				<option selected disabled>- Select Subcategory -</option>
+				<?php 
+					while($subcat=mysqli_fetch_row($subcatquery)){
+						echo("<option value='$subcat[0]'>$subcat[1]</option>");
+					}
+				?>
+			</select>
+			<input type="submit" value="Filter"/>
+		</form><br />
 		Budget: Php <?php echo number_format($_SESSION["budget"],2,'.',''); ?><br />
 		<table>
 			<tbody>
 				<?php
 					$cbudget=$_SESSION["budget"]-$_SESSION["item_total"];
 					echo("<html>Remaining Money: ".number_format($cbudget,2,'.','')."<br />Products:</html>");
-					$product_array = $db_handle->runQuery("SELECT *
-					FROM products
-					WHERE STATUS=1 AND stock>0 AND reserved<stock AND prodprice<=".$cbudget."
-					ORDER BY categoryid, subcatid, productid ASC");
+					if(!empty($_SESSION["cid"]) and !empty($_SESSION["scid"])){
+						$product_array = $db_handle->runQuery("SELECT *
+						FROM products
+						WHERE STATUS=1 AND stock>0 AND reserved<stock AND prodprice<=".$cbudget." AND categoryid=".$_SESSION["cid"]." AND subcatid=".$_SESSION["scid"]."
+						ORDER BY categoryid, subcatid, productid ASC");
+					}
+					else{
+						$product_array = $db_handle->runQuery("SELECT *
+						FROM products
+						WHERE STATUS=1 AND stock>0 AND reserved<stock AND prodprice<=".$cbudget."
+						ORDER BY categoryid, subcatid, productid ASC");
+					}
 					if (!empty($product_array)){
 						foreach($product_array as $key=>$value){
 				?>
@@ -144,7 +178,7 @@
 						<td><img src="<?php echo $product_array[$key]["image"]; ?>" style="height:150px; width:150px;"></td>
 						<td><?php echo $product_array[$key]["prodname"]; ?></td>
 						<td><?php echo "Php ".$product_array[$key]["prodprice"]; ?></td>
-						<td><input type="text" name="quantity" value="1" size="2" /><input type="submit" value="Add to Shopping List" class="btnAddAction" /></td>
+						<td><input type="text" name="quantity" value="1" size="2" /><input type="submit" value="Add to Shopping List" /></td>
 					</tr>
 				</form>
 				<?php
