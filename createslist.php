@@ -57,15 +57,17 @@
 			break;
 			
 			case "finalize":
-				$finalize=mysqli_query($link,"INSERT INTO userlist(userid,budget,totalprice,status) VALUES('$uidf[0]','".$_SESSION['budget']."','".$_SESSION["item_total"]."')");
+				$finalize=mysqli_query($link,"INSERT INTO userlist(userid,budget,totalprice,status) VALUES('$uidf[0]','".$_SESSION['budget']."','".$_SESSION["item_total"]."','1')");
 				$id_query=mysqli_query($link, "SELECT prodlistid FROM userlist WHERE userid='$uidf[0]' ORDER BY dateadded DESC LIMIT 1");
 				$plistid=mysqli_fetch_row($id_query);
 				foreach($_SESSION["slist"] as $k => $v){
-					$addproducts=mysqli_query($link,"INSERT INTO prodlist(prodlistid,productid,quantity) VALUES('$plistid[0]','".$_SESSION['slist'][$k]['productid']."','".$_SESSION['slist'][$k]['quantity'].",1')");
+					$addproducts=mysqli_query($link,"INSERT INTO prodlist(prodlistid,productid,quantity) VALUES('$plistid[0]','".$_SESSION['slist'][$k]['productid']."','".$_SESSION['slist'][$k]['quantity']."')");
 				}
 				echo ("<script> alert('Shopping list has been created. To view or edit the list created, go to shopping list tab.'); </script>");
 				unset($_SESSION["slist"]);
 				$_SESSION["budget"]=0;
+				$_SESSION["cid"]=0;
+				$_SESSION["scid"]=0;
 			break;
 			
 			case "filter":
